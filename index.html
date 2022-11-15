@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora</title>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="bootstrap.min.css" />
+  </head>
+  <body>
+    <form action="" class="center-block">
+      <!-- <input id="inputNumber" type="number" dir="rtl" /> -->
+      <div>
+        <a id="deleteButton">
+          <i class="fa-solid fa-delete-left"></i>
+        </a>
+        <!-- <input
+        id="addNumToCursor"
+        type="button"
+        value="Adicionar"
+        class="pull-right"
+      /> -->
+        <!-- <label for="count">Conta:</label> -->
+        <p id="count" dir="ltr"></p>
+        <!-- <p id="count" class="center-block" dir="rtl"></p> -->
+      </div>
+
+      <section>
+        <!-- <button id="cButton">C</button> -->
+        <input type="button" id="cleanButton" value="C" />
+        <input type="button" id="parenthesisButton" value="( )" />
+        <input type="button" id="percentButton" value="%" />
+        <input type="button" id="divideButton" value="÷" class="operations" />
+
+        <input type="button" id="7-button" value="7" class="number-button" />
+        <input type="button" id="8-button" value="8" class="number-button" />
+        <input type="button" id="9-button" value="9" class="number-button" />
+
+        <input type="button" id="multiplyButton" value="x" class="operations" />
+
+        <input type="button" id="4-button" value="4" class="number-button" />
+        <input type="button" id="5-button" value="5" class="number-button" />
+        <input type="button" id="6-button" value="6" class="number-button" />
+
+        <input type="button" id="minusButton" value="-" class="operations" />
+
+        <input type="button" id="1-button" value="1" class="number-button" />
+        <input type="button" id="2-button" value="2" class="number-button" />
+        <input type="button" id="3-button" value="3" class="number-button" />
+
+        <input type="button" id="plusButton" value="+" class="operations" />
+        <input type="button" id="negativeButton" value="+/-" />
+
+        <input type="button" id="0-button" value="0" class="number-button" />
+
+        <input type="button" id="dotButton" value="." />
+        <input type="button" id="equalsButton" value="=" class="operations" />
+      </section>
+      <p id="current-calculation"></p>
+      <p id="result"></p>
+    </form>
+    <script type="text/javascript" src="index.js"></script>
+    <script
+      src="https://kit.fontawesome.com/5453cd7c59.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
