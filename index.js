@@ -221,6 +221,7 @@ resultButton.addEventListener('click', () => {
             multiplyDivideOperations();
             plusMinusOperations();
             console.log(calc);  
+            document.querySelector('#result').innerText = 'Resultado: ' + calc;
     }
 
     // if (operationsClicked.includes('plus')) {
