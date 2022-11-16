@@ -3,6 +3,7 @@ let isNumberAdded = false;
 let operationsClicked = [];
 let isResultPressed = false;
 let isDotClicked = false;
+// let calc = [];
 
 let deleteButton = document.querySelector('#deleteButton');
 deleteButton.addEventListener('click', () => {
@@ -26,15 +27,9 @@ function clearCursor() {
     // document.querySelector('#count').innerText = '';
     isNumberAdded = false;
     isOperationClicked = false;
+    isDotClicked = false;
     operationsClicked = [];
 }
-
-// let addNumToCursor = document.getElementById('addNumToCursor');
-// addNumToCursor.addEventListener('click', () => {
-//     document.querySelector('#count').innerText += document.querySelector('#inputNumber').value;
-//     document.querySelector('#inputNumber').value = '';
-//     isNumberAdded = true;
-// })
 
 //botao ( )
 document.getElementById('parenthesisButton').addEventListener('click', () => {
@@ -49,18 +44,7 @@ document.getElementById('percentButton').addEventListener('click', () => {
 function operationButton(operation, symbol) {
     let operationId = operation + 'Button';
     document.getElementById(operationId).addEventListener('click', () => {
-        if (isNumberAdded && !isOperationClicked && operation != 'colon') {
-            // document.getElementById('count').innerText += symbol;
-            let currentValue = document.getElementById('count').innerText;
-
-            //verificacao serve para 
-            // if(document.getElementById('current-calculation').innerText == ''){
-            //     document.getElementById('current-calculation').innerText = currentValue + " " + symbol;
-            // }
-            // else {
-            //     document.getElementById('current-calculation').innerText += currentValue + " " + symbol;
-            // }
-            // document.getElementById('current-calculation').innerText += "  " + currentValue + " " + symbol;k
+        if (isNumberAdded && !isOperationClicked && operation != 'dot') {
 
             document.getElementById('count').innerText += symbol;
             isOperationClicked = true;
@@ -70,25 +54,9 @@ function operationButton(operation, symbol) {
                 operationsClicked += operation + ' ';
             }
         }
-        else if (isNumberAdded && isOperationClicked && operation != 'colon') {
+        else if (isNumberAdded && isOperationClicked && operation != 'dot') {
             isOperationClicked = false;
-            let currentValue = document.getElementById('count').innerText;
 
-            //verificacao serve para 
-            // if(document.getElementById('current-calculation').innerText == ''){
-            //     document.getElementById('current-calculation').innerText = currentValue + " " + symbol;
-            // }
-            // else {
-            //     document.getElementById('current-calculation').innerText += currentValue + " " + symbol;
-            // }
-            // document.getElementById('current-calculation').innerText += "  " + currentValue + " " + symbol;k
-
-            // if(document.getElementById('current-calculation').innerText == ''){
-            //     document.getElementById('current-calculation').innerText = currentValue;
-            // }
-            // else {
-            //     document.getElementById('current-calculation').innerText = currentValue;
-            // }
             document.getElementById('count').innerText += symbol;
             isOperationClicked = true;
             isNumberAdded = false;
@@ -102,14 +70,11 @@ function operationButton(operation, symbol) {
             isDotClicked = true;
         }
         else if (isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
-            console.log(document.querySelector('#count').innerText);
             document.querySelector('#count').innerText += symbol;
             isDotClicked = true;
         }
         else {
-            console.log('nao pode burro');
-            console.log(isNumberAdded);
-            console.log(isOperationClicked);
+            alert('É necessário inserir um número primeiro!');
         }
     })
 }
@@ -134,19 +99,19 @@ function numberButton(num) {
 
         //a verificacao serve para permitir numeros com mais de um digito
         if(isOperationClicked) {
-            // document.querySelector('#count').innerText = '';
             isOperationClicked = false;
-            // let currentCount =  document.querySelector('#count').innerText;
-            // document.querySelector('#count').innerText = num + currentCount;
             document.querySelector('#count').innerText += num;
             isNumberAdded = true;
         }
         else if (isDotClicked) {
-            let current = document.querySelector('#count').innerText;
-            let floatNum = current + num;
-            document.querySelector('#count').innerText = floatNum;
-            console.log(document.querySelector('#count').innerText);
+            document.querySelector('#count').innerText += num;
+            
+            let fullCount = document.querySelector('#count').innerText.split('');
+            let floatNum = (fullCount.slice(fullCount.lastIndexOf('.') - 1, fullCount.lastIndexOf('.') + (fullCount)))
+                            .toString().replaceAll(',', '');
+
             isNumberAdded = true;
+            isDotClicked = false;
         }
         else {
             document.querySelector("#count").innerText += num;
@@ -162,15 +127,8 @@ for (let x = 0; x <= 9; x++) {
 
 let resultButton = document.getElementById('equalsButton');
 resultButton.addEventListener('click', () => {
-    let calc = document.querySelector('#count').innerText.split('');
-    // console.log(calc);
 
-    // let currentValue = document.getElementById('count').innerText;
-    // document.getElementById('current-calculation').innerText += ' ' + currentValue;
-    // if (operationsClicked.includes('multiply')) {
-    //     let result = calc.split('multiply');
-    //     console.log(result);
-    // }
+    let calc = document.getElementById('count').innerText.split(/(\+|\-|\*|\/)/g);
 
     function multiplyDivideOperations() {
         for (let i = 0; i < calc.length; i++) {
@@ -181,13 +139,11 @@ resultButton.addEventListener('click', () => {
                     let result = numBeforeOperation * numAfterOperation;
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
-                    console.log(calc);
                 }
                 else if (calc[i] == '/') {
                     let result = numBeforeOperation / numAfterOperation;
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
-                    console.log(calc);
                 }
             }
         }
@@ -202,13 +158,11 @@ resultButton.addEventListener('click', () => {
                     let result = numBeforeOperation + numAfterOperation;
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
-                    console.log(calc);
                 }
                 else if (calc[i] == '-') {
                     let result = numBeforeOperation - numAfterOperation;
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
-                    console.log(calc);
                 }
             }
         }
@@ -220,50 +174,10 @@ resultButton.addEventListener('click', () => {
     if (operationsClicked.length > 1) {
             multiplyDivideOperations();
             plusMinusOperations();
-            console.log(calc);  
             document.querySelector('#result').innerText = 'Resultado: ' + calc;
     }
 
-    // if (operationsClicked.includes('plus')) {
-    //     let result = (document.getElementById('count').innerText).split('+');
-    //     let resultValue = 0;
-    //     result.forEach((value) => {resultValue += parseFloat(value)})
-    //     document.querySelector('#result').innerText = 'Resultado: ' + resultValue;
-    // }
-    // else if (operationsClicked.includes('minus')) {
-    //     let result = (document.getElementById('count').innerText).split('-');
-    //     let resultValue = (result[0] * 2);
-    //     result.forEach((value) => {resultValue -= parseFloat(value)})
-    //     document.querySelector('#result').innerText = 'Resultado: ' + resultValue;
-    // }
-    // else if (operationsClicked.includes('multiply')) {
-    //     let result = (document.getElementById('count').innerText).split('*');
-    //     let resultValue = 1;
-    //     result.forEach((value) => {resultValue *= parseFloat(value)});
-    //     document.querySelector('#result').innerText = 'Resultado: ' + resultValue;
-    // }
-    // else if (operationsClicked.includes('divide')) {
-    //     let result = (document.getElementById('count').innerText).split('/');
-    //     let resultValue = (result[0] * result[0]);
-    //     result.forEach((value) => {resultValue /= parseFloat(value)});
-    //     document.querySelector('#result').innerText = 'Resultado: ' + resultValue;
-    // }
-
     isResultPressed = true;
     operationsClicked = [];
+    isDotClicked = false;
 })
-
-//FUNCAO PARA SABER QUANTAS VEZES O MESMO VALOR SE REPETE NUM ARRAY
-// function countInArray(array = [], value) {
-//     return array.filter(item => item == value).length;
-// }
-
-function countInArray(array, value) {
-    var count = 0;
-    for (var i = 0; i < array.length; i++) {
-        if (array[i] === value) {
-            count++;
-        }
-    }
-    return count;
-}
