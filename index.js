@@ -49,7 +49,11 @@ function operationButton(operation, symbol) {
             document.getElementById('count').innerText += symbol;
             isOperationClicked = true;
             isNumberAdded = false;
+            if(isDotClicked == true) {
+                isDotClicked = false;
+            }
 
+            isDotClicked = false;
             if (!(operationsClicked.includes(operation))) {
                 operationsClicked += operation + ' ';
             }
@@ -60,10 +64,17 @@ function operationButton(operation, symbol) {
             document.getElementById('count').innerText += symbol;
             isOperationClicked = true;
             isNumberAdded = false;
+            if(isDotClicked == true) {
+                isDotClicked = false;
+            }
 
+            isDotClicked = false;
             if (!(operationsClicked.includes(operation))) {
                 operationsClicked += operation + ' ';
             }
+        }
+        else if (operation == 'dot' && isDotClicked) {
+            alert('Esse número já tem ponto flutuante!');
         }
         else if (!isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
             document.querySelector('#count').innerText += '0' + symbol;
@@ -105,13 +116,8 @@ function numberButton(num) {
         }
         else if (isDotClicked) {
             document.querySelector('#count').innerText += num;
-            
-            let fullCount = document.querySelector('#count').innerText.split('');
-            let floatNum = (fullCount.slice(fullCount.lastIndexOf('.') - 1, fullCount.lastIndexOf('.') + (fullCount)))
-                            .toString().replaceAll(',', '');
 
             isNumberAdded = true;
-            isDotClicked = false;
         }
         else {
             document.querySelector("#count").innerText += num;
@@ -135,8 +141,16 @@ resultButton.addEventListener('click', () => {
             if (calc[i] == '*' || calc[i] == '/') {
                 let numBeforeOperation = parseFloat(calc[i - 1]);
                 let numAfterOperation = parseFloat(calc[i + 1]);
+
+                let floatNumBefOps = numBeforeOperation.toString().split(/\./);
+                let floatNumAftOps = numAfterOperation.toString().split(/\./);
+
+                let lengthToFixed;
+                if(floatNumBefOps[1].length >= floatNumAftOps[1].length) { lengthToFixed = floatNumBefOps[1].length; } 
+                else if (floatNumAftOps[1].length > floatNumBefOps[1].length) { lengthToFixed = floatNumAftOps[1].length; }
+
                 if (calc[i] == '*') {
-                    let result = numBeforeOperation * numAfterOperation;
+                    let result = parseFloat(numBeforeOperation * numAfterOperation).toFixed(lengthToFixed * 1.5);
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
                 }
@@ -154,13 +168,24 @@ resultButton.addEventListener('click', () => {
             if (calc[i] == '+' || calc[i] == '-') {
                 let numBeforeOperation = parseFloat(calc[i - 1]);
                 let numAfterOperation = parseFloat(calc[i + 1]);
+
+                let floatNumBefOps = numBeforeOperation.toString().split(/\./);
+                let floatNumAftOps = numAfterOperation.toString().split(/\./);
+
+                let lengthToFixed = 0;
+
+                if (floatNumBefOps.length > 1 || floatNumAftOps.length > 1) {
+                    if(floatNumBefOps[1].length >= floatNumAftOps[1].length) { lengthToFixed = floatNumBefOps[1].length; } 
+                    else if (floatNumAftOps[1].length > floatNumBefOps[1].length) { lengthToFixed = floatNumAftOps[1].length; }
+                }
+
                 if (calc[i] == '+') {
-                    let result = numBeforeOperation + numAfterOperation;
+                    let result = parseFloat(numBeforeOperation + numAfterOperation).toFixed(lengthToFixed);
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
                 }
                 else if (calc[i] == '-') {
-                    let result = numBeforeOperation - numAfterOperation;
+                    let result = parseFloat(numBeforeOperation - numAfterOperation).toFixed(lengthToFixed);
                     calc.splice(i - 1, 3, result.toString());
                     i = 0;
                 }
