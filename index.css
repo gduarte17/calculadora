@@ -49,7 +49,7 @@ form>div>input::-webkit-inner-spin-button {
     margin-bottom: 2em;
 }
 
-#count {
+#display {
     color: white;
     width: 60%;
     background-color: #123b49;
@@ -89,17 +89,7 @@ section input:hover {
     border: 1px solid #4fc1ee;
     box-shadow: 2px 2px 12px 0px #4fc1ee;
     transition: border .15s, box-shadow .15s;
-    /* background-color: ; */
 }
-
-/* .number-button:hover {
-    border: 2px solid #4fc1ee;
-} */
-
-/* .operations:hover {
-    border: 1px solid #9555dd;
-    box-shadow: 2px 2px 12px 1px #9555dd;
-} */
 
 #current-calculation, #result {
     color: white;
