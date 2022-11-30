@@ -1,104 +1,26 @@
 @media(max-width: 450px) {
-body {
-    background-color: #091a20 !important;
-}
+    form {
+        width: 90%;
+        margin: 1.5em;
+    }
 
-form {
-    width: 90%;
-    margin: 1.5em;
-}
+    #display {
+        color: white;
+        width: 70%;
+        background-color: #123b49;
+        border: 1px solid #55b7dd;
+        border-radius: 8px;
+        padding: .25em;
+        margin: 0 auto 0 auto;
+        min-height: 2.1em;
+        font-size: 1.5em;
+    }
 
-form > div {
-    display: flex;
-    flex-direction: row-reverse;
-    margin-bottom: 2em;
-}
+    form>div>a>i {
+        margin-left: -2.5em;
+    }
 
-/* form>div>input {
-    width: 100%;
-    padding-right: 1em;
-    margin-bottom: 1em;
-    border: 0px;
-    border-bottom: 1px solid #55b7dd;
-    background-color: #091a20;
-    outline: none;
-    color: white;
-    font-size: 2.5em;
-} */
-
-#count {
-    color: white;
-    width: 70%;
-    background-color: #123b49;
-    border: 1px solid #55b7dd;
-    border-radius: 8px;
-    padding: .25em;
-    /* margin-top: 3em;
-    margin-bottom: 2em; */
-    margin: 0 auto 0 auto;
-    min-height: 2.1em;
-    font-size: 1.5em;
-}
-
-form>div>a>i {
-    color: white;
-    cursor: pointer;
-    margin-left: -2.5em;
-    margin-top: 1em;
-}
-
-form>div>input::-webkit-outer-spin-button,
-form>div>input::-webkit-inner-spin-button {
-    appearance: none;
-}
-
-/* #addNumToCursor {
-    background-color: #123b49;
-    color: white;
-    border: 1px solid #55b7dd;
-    border-radius: 4px;
-    margin-bottom: 2em;
-} */
-
-form section {
-    display: grid;
-    /* grid-template-columns: 22% 22% 22% 34%; */
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 20% 20% 20% 20% 20%;
-    width: 85%;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-section input {
-    margin: .35em;
-    border: 0px;
-    border-radius: 8px;
-    /* background-color: #123b49; */
-    background-color: #0e2b35;
-    color: white;
-    height: 3.5em;
-    width: 4.5em;
-    justify-self: center;
-}
-
-section input:hover {
-    border: 1px solid #4fc1ee;
-    box-shadow: 2px 2px 12px 0px #4fc1ee;
-    transition: border .15s, box-shadow .15s;
-    /* background-color: ; */
-}
-
-/* .number-button:hover {
-    border: 2px solid #4fc1ee;
-} */
-
-/* .operations:hover {
-    border: 1px solid #9555dd;
-    box-shadow: 2px 2px 12px 1px #9555dd;
-} */
-
-#current-calculation, #result {
-    color: white;
-}
+    form section {
+        width: 85%;
+    }
 }
