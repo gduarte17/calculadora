@@ -8,27 +8,18 @@
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="mobile.css" />
     <link rel="stylesheet" href="bootstrap.min.css" />
+    <script type="text/javascript" src="index.js" defer></script>
   </head>
   <body>
     <form action="" class="center-block">
-      <!-- <input id="inputNumber" type="number" dir="rtl" /> -->
       <div>
         <a id="deleteButton">
           <i class="fa-solid fa-delete-left"></i>
         </a>
-        <!-- <input
-        id="addNumToCursor"
-        type="button"
-        value="Adicionar"
-        class="pull-right"
-      /> -->
-        <!-- <label for="count">Conta:</label> -->
-        <p id="count" dir="ltr"></p>
-        <!-- <p id="count" class="center-block" dir="rtl"></p> -->
+        <p id="display" dir="ltr"></p>
       </div>
 
       <section>
-        <!-- <button id="cButton">C</button> -->
         <input type="button" id="cleanButton" value="C" />
         <input type="button" id="parenthesisButton" value="( )" />
         <input type="button" id="percentButton" value="%" />
@@ -61,7 +52,6 @@
       <p id="current-calculation"></p>
       <p id="result"></p>
     </form>
-    <script type="text/javascript" src="index.js"></script>
     <script
       src="https://kit.fontawesome.com/5453cd7c59.js"
       crossorigin="anonymous"
