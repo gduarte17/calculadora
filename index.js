@@ -4,69 +4,89 @@ let operationsClicked = [];
 let isResultPressed = false;
 let isDotClicked = false;
 let isParenthesisOpened = false;
+let count = '';
 
 let deleteButton = document.querySelector('#deleteButton');
 deleteButton.addEventListener('click', () => {
-    let stringInput = document.querySelector('#count').innerText;
+
+    let stringInput = count;
     if (stringInput.length == 1) {
         clearCursor();
     }
     else if (stringInput.length > 1) {
-        // if (isNumber(stringInput.charAt(stringInput.length - 1))) {
         if (stringInput.charAt(stringInput.length - 1).match(/\d/g)) {
-            // if (isNumber(stringInput.charAt(stringInput.length - 2))) {
             if (stringInput.charAt(stringInput.length - 2).match(/\d/g)) {
-                document.querySelector('#count').innerText = stringInput.slice(0, -1);
+                count = stringInput.slice(0, -1);
+                document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
             }
-            // else if (!isNumber(stringInput.charAt(stringInput.length - 2)) && stringInput.charAt(stringInput.length - 2) != '.') {
             else if (!stringInput.charAt(stringInput.length - 2).match(/\d/g) && stringInput.charAt(stringInput.length - 2) != '.') {
-                document.querySelector('#count').innerText = stringInput.slice(0, -1);
+                count = stringInput.slice(0, -1);
+                document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
                 if (stringInput.charAt(stringInput.length - 2) == '*'
                 || stringInput.charAt(stringInput.length  - 2) == '/'
                 || stringInput.charAt(stringInput.length  - 2) == '+'
                 || stringInput.charAt(stringInput.length  - 2) == '-') {
                     isOperationClicked = true;
-                    isNumberAdded = false;
                 }
+                isNumberAdded = false;
             }
-            // else if (!isNumber(stringInput.charAt(stringInput.length - 2)) && stringInput.charAt(stringInput.length - 2) == '.') {
             else if (!stringInput.charAt(stringInput.length - 2).match(/\d/g) && stringInput.charAt(stringInput.length - 2) == '.') {
-                document.querySelector('#count').innerText = stringInput.slice(0, -1);
+                // document.querySelector('#count').innerText = stringInput.slice(0, -1); //#marcador
+                count = stringInput.slice(0, -1);
+                document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
                 isDotClicked = true;
             }
         }
         else if (stringInput.charAt(stringInput.length - 1) == '(') {
-            document.querySelector('#count').innerText = stringInput.slice(0, -1);
+            count = stringInput.slice(0, -1);
+            document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
+            if (stringInput.charAt(stringInput.length - 2).match(/\d/g)) {
+                isNumberAdded = true
+            }
+            else if (stringInput.charAt(stringInput.length - 2) == '*'
+            || stringInput.charAt(stringInput.length - 2) == '/'
+            || stringInput.charAt(stringInput.length - 2) == '+'
+            || stringInput.charAt(stringInput.length - 2) == '-') {
+                isOperationClicked = true;
+            }
+
             parenthesisManagement('closing');
         }
         else if (stringInput.charAt(stringInput.length - 1) == ')') {
-            document.querySelector('#count').innerText = stringInput.slice(0, -1);
+            count = stringInput.slice(0, -1);
+            document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
+            if (stringInput.charAt(stringInput.length - 2).match(/\d/g)) {
+                isNumberAdded = true;
+            }
+
             parenthesisManagement('opening');
         }
         else if (stringInput.charAt(stringInput.length - 1) == '.') {
-            document.querySelector('#count').innerText = stringInput.slice(0, -1);
+            count = stringInput.slice(0, -1);
+            document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
             isDotClicked = false;
         }
         else if (stringInput.charAt(stringInput.length - 1) == '*'
         || stringInput.charAt(stringInput.length - 1) == '/'
         || stringInput.charAt(stringInput.length - 1) == '+'
         || stringInput.charAt(stringInput.length - 1) == '-') {
-            document.querySelector('#count').innerText = stringInput.slice(0, -1);
+            count = stringInput.slice(0, -1);
+            document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
             isOperationClicked = false;
+            if (stringInput.charAt(stringInput.length - 2).match(/\d/g)) {
+                isNumberAdded = true;
+            }
         }
     }
 })
-
-// function isNumber(value) {
-//     return (value.match(/\d/g));
-// }
 
 //botao C
 let cleanButton = document.querySelector('#cleanButton');
 cleanButton.addEventListener('click', () => {clearCursor()});
 
 function clearCursor() {
-    document.querySelector('#count').innerText = '';
+    document.querySelector('#display').innerText = '';
+    count = '';
     document.querySelector('#current-calculation').innerText = '';
     document.querySelector('#result').innerText = '';
     isNumberAdded = false;
@@ -81,40 +101,62 @@ function clearCursor() {
 let openedParenthesisCounter = 0;
 
 document.getElementById('parenthesisButton').addEventListener('click', () => {
-    let count = document.getElementById('count').innerText;
 
-    if (!isParenthesisOpened) {
+    if (isResultPressed) {
+        clearCursor();
+        count += '(';
+        document.querySelector('#display').innerText += '(';
+        parenthesisManagement('opening');
+    }
+
+    else if (!isParenthesisOpened) {
         //ABRINDO PARENTESE
-        if (count.charAt(count.length - 1) == ')') {
-            document.getElementById('count').innerText += '*(';
+        if (count.charAt(count.length - 1) == ')' || count.charAt(count.length - 1).match(/\d/g)) {
+            count += '*(';
+            document.querySelector('#display').innerText += ' x (';
             parenthesisManagement('opening');
         }
+        else if (isOperationClicked) {
+            count += '(';
+            document.querySelector('#display').innerText += ' (';
+            parenthesisManagement('opening');
+            isOperationClicked = false;
+        }
         else {
-            document.getElementById('count').innerText += '(';
+            count += '(';
+            document.querySelector('#display').innerText += '(';
             parenthesisManagement('opening');
         }
     }
-    else if (isParenthesisOpened && !isNumberAdded) {
+    else if (isParenthesisOpened && !isNumberAdded && !isOperationClicked) {
         if (count.charAt(count.length - 1) == '(') {
-            document.getElementById('count').innerText += '(';
+            count += '(';
+            document.querySelector('#display').innerText += '(';
             parenthesisManagement('opening');
         }
         else if (count.charAt(count.length - 1) == ')') {
-            document.getElementById('count').innerText += ')';
+            count += ')';
+            document.querySelector('#display').innerText += ')';
             parenthesisManagement('closing');
         }
         else if (isOperationClicked) {
-            document.getElementById('count').innerText += '(';
+            count += '(';
+            document.querySelector('#display').innerText += ' (';
             parenthesisManagement('opening');
+            isOperationClicked = false;
         }
     }
     else if (isParenthesisOpened && isNumberAdded) {
         //FECHANDO PARENTESE
-        document.getElementById('count').innerText += ')';
+        count += ')';
+        document.querySelector('#display').innerText += ')';
         parenthesisManagement('closing');
     }
     else if (isOperationClicked) {
-        document.getElementById('count').innerText += '(';
+        count += '(';
+        document.querySelector('#display').innerText += ' (';
+        parenthesisManagement('opening');
+        isOperationClicked = false;
     }
     isNumberAdded = false;
 })
@@ -138,15 +180,13 @@ document.getElementById('percentButton').addEventListener('click', () => {
     console.log('percentButton');
 })
 
-function operationButton(operation, symbol) {
+function operationButton(operation, symbol, displaySymbol) {
     let operationId = operation + 'Button';
     document.getElementById(operationId).addEventListener('click', () => {
         if (isNumberAdded && !isOperationClicked && operation != 'dot') {
 
-            document.getElementById('count').innerText += symbol;
-            // if(isDotClicked == true) {
-                //     isDotClicked = false;
-                // }
+            count += symbol;
+            document.querySelector('#display').innerText += displaySymbol;
                 
             isOperationClicked = true;
             isNumberAdded = false;
@@ -158,10 +198,8 @@ function operationButton(operation, symbol) {
         else if (isNumberAdded && isOperationClicked && operation != 'dot') {
             isOperationClicked = false;
 
-            document.getElementById('count').innerText += symbol;
-            // if(isDotClicked == true) {
-                //     isDotClicked = false;
-                // }
+            count += symbol;
+            document.querySelector('#display').innerText += displaySymbol;
                 
             isOperationClicked = true;
             isNumberAdded = false;
@@ -174,20 +212,37 @@ function operationButton(operation, symbol) {
             alert('Esse número já tem ponto flutuante!');
         }
         else if (!isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
-            document.querySelector('#count').innerText += '0' + symbol;
+            count += '0' + symbol;
+            document.querySelector('#display').innerText += '0' + symbol;
             isDotClicked = true;
         }
         else if (isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
-            document.querySelector('#count').innerText += symbol;
+            count += symbol;
+            document.querySelector('#display').innerText += symbol;
             isDotClicked = true;
         }
-        else if (document.getElementById('count').innerText.charAt(document.getElementById('count').innerText.length - 1) == ')') {
-            document.getElementById('count').innerText += symbol;
+        else if (count.charAt(count.length - 1) == ')') {
+            count += symbol;
+            document.querySelector('#display').innerText += displaySymbol;
             isOperationClicked = true;
             isNumberAdded = false;
             isDotClicked = false;
             if (!(operationsClicked.includes(operation))) {
                 operationsClicked += operation + ' ';
+            }
+        }
+        else if (count.charAt(count.length - 1) == '(') {
+            if (operation == 'minus') {
+                count += symbol;
+                document.querySelector('#display').innerText += displaySymbol;
+                isOperationClicked = true;
+                isNumberAdded = false;
+                if (!(operationsClicked.includes(operation))) {
+                    operationsClicked += operation + ' ';
+                }
+            }
+            else {
+                console.log('formato invalido')
             }
         }
         else {
@@ -196,39 +251,42 @@ function operationButton(operation, symbol) {
     })
 }
 
-operationButton('divide', '/');
-operationButton('multiply', '*');
-operationButton('minus', '-');
-operationButton('plus', '+');
+operationButton('divide', '/', ' /');
+operationButton('multiply', '*', ' x');
+operationButton('minus', '-', ' -');
+operationButton('plus', '+', ' +');
 operationButton('dot', '.');
 
 function numberButton(num) {
     let numberId = num.toString() + '-button';
     document.getElementById(numberId).addEventListener('click', () => {
-        let count = document.getElementById('count').innerText;
 
         //CODIGO PARA LIMPAR AS CONTAS APOS APERTAR =
         if (isResultPressed) {
-            // document.querySelector('#count').innerText = '';
-            // document.querySelector('#current-calculation').innerText = '';
-            // document.querySelector('#result').innerText = '';
-            // isResultPressed = false;
             clearCursor();
         }
 
         //a verificacao serve para permitir numeros com mais de um digito
         if(isOperationClicked) {
             isOperationClicked = false;
-            document.querySelector('#count').innerText += num;
+            count += num;
+            document.querySelector('#display').innerText += ' ' + num;
         }
         else if (isDotClicked) {
-            document.querySelector('#count').innerText += num;
+            count += num;
+            document.querySelector('#display').innerText += num;
         }
-        else if (isParenthesisOpened && !isOperationClicked && count.charAt(count.length - 1) == ')' ) {
-            document.querySelector('#count').innerText += '*' + num;
+        else if (count.charAt(count.length - 1) == '(') {
+            count += num;
+            document.querySelector('#display').innerText += num;
+        }
+        else if (count.charAt(count.length - 1) == ')') {
+            count += '*' + num;
+            document.querySelector('#display').innerText += ' x ' + num;
         }
         else {
-            document.querySelector("#count").innerText += num;
+            count += num;
+            document.querySelector('#display').innerText += num;
             isOperationClicked = false;
         }
         isNumberAdded = true;
@@ -242,8 +300,20 @@ for (let x = 0; x <= 9; x++) {
 function multiplyDivideOperations(calc) {
     for (let i = 0; i < calc.length; i++) {
         if (calc[i] == '*' || calc[i] == '/') {
-            let numBeforeOperation = parseFloat(calc[i - 1]);
-            let numAfterOperation = parseFloat(calc[i + 1]);
+            let numBeforeOperation = calc[i - 1];
+            let numAfterOperation = calc[i + 1];
+            
+            if (numBeforeOperation.includes('_')) {
+                numBeforeOperation = numBeforeOperation.slice(1);
+                numBeforeOperation = parseFloat(numBeforeOperation) * -1;
+            }
+            if (numAfterOperation.includes('_')) {
+                numAfterOperation = numAfterOperation.slice(1);
+                numAfterOperation = parseFloat(numAfterOperation) * -1;
+            }
+
+            numBeforeOperation = parseFloat(numBeforeOperation);
+            numAfterOperation = parseFloat(numAfterOperation);
 
             let floatNumBefOps = numBeforeOperation.toString().split(/\./);
             let floatNumAftOps = numAfterOperation.toString().split(/\./);
@@ -259,18 +329,14 @@ function multiplyDivideOperations(calc) {
                 else if (floatNumAftOps.length > 1) { lengthToFixed = floatNumAftOps[1].length; }
             }
 
-            // 1.333333333 * 1.265349 = 1.687132 - 000
             if (calc[i] == '*') {
                 let result = parseFloat(numBeforeOperation * numAfterOperation).toFixed(lengthToFixed);
                 if (result.includes('.')) {
                     let floating = result.slice(result.indexOf('.') + 1, result.length);
                     let i = floating.length;
-                    console.log(floating);
                     while (i >= 0) {
-                        console.log(i);
                         if (floating[i - 1] == '0') {
                             result = result.slice(0, -1);
-                            console.log(result);
                         }
                         else if (floating[i - 1] != '0') {
                             break;
@@ -281,11 +347,22 @@ function multiplyDivideOperations(calc) {
                         result = result.slice(0, -1);
                     }
                 }
+                if (Math.sign(result) === -1) {
+                    result = result.split('');
+                    result.shift();
+                    result = ('_' + result.toString()).replaceAll(',', ''); //importante
+                }
                 calc.splice(i - 1, 3, result.toString());
                 i = 0;
             }
             else if (calc[i] == '/') {
                 let result = numBeforeOperation / numAfterOperation;
+
+                if (Math.sign(result) === -1) {
+                    result = result.split('');
+                    result.shift();
+                    result = ('_' + result.toString()).replaceAll(',', '');
+                }
                 calc.splice(i - 1, 3, result.toString());
                 i = 0;
             }
@@ -296,8 +373,20 @@ function multiplyDivideOperations(calc) {
 function plusMinusOperations(calc) {
     for (let i = 0; i < calc.length; i++) {
         if (calc[i] == '+' || calc[i] == '-') {
-            let numBeforeOperation = parseFloat(calc[i - 1]);
-            let numAfterOperation = parseFloat(calc[i + 1]);
+            let numBeforeOperation = calc[i - 1];
+            let numAfterOperation = calc[i + 1];
+            
+            if (numBeforeOperation.includes('_')) {
+                numBeforeOperation = numBeforeOperation.slice(1);
+                numBeforeOperation = parseFloat(numBeforeOperation) * -1;
+            }
+            if (numAfterOperation.includes('_')) {
+                numAfterOperation = numAfterOperation.slice(1);
+                numAfterOperation = parseFloat(numAfterOperation) * -1;
+            }
+
+            numBeforeOperation = parseFloat(numBeforeOperation);
+            numAfterOperation = parseFloat(numAfterOperation);
 
             let floatNumBefOps = numBeforeOperation.toString().split(/\./);
             let floatNumAftOps = numAfterOperation.toString().split(/\./);
@@ -315,11 +404,53 @@ function plusMinusOperations(calc) {
 
             if (calc[i] == '+') {
                 let result = parseFloat(numBeforeOperation + numAfterOperation).toFixed(lengthToFixed);
+                if (result.includes('.')) {
+                    let floating = result.slice(result.indexOf('.') + 1, result.length);
+                    let i = floating.length;
+                    while (i >= 0) {
+                        if (floating[i - 1] == '0') {
+                            result = result.slice(0, -1);
+                        }
+                        else if (floating[i - 1] != '0') {
+                            break;
+                        }
+                        i--;
+                    }
+                    if (result.charAt(result.length - 1) == '.') {
+                        result = result.slice(0, -1);
+                    }
+                }
+                if (Math.sign(result) === -1) {
+                    result = result.split('');
+                    result.shift();
+                    result = ('_' + result.toString()).replaceAll(',', '');
+                }
                 calc.splice(i - 1, 3, result.toString());
                 i = 0;
             }
             else if (calc[i] == '-') {
                 let result = parseFloat(numBeforeOperation - numAfterOperation).toFixed(lengthToFixed);
+                if (result.includes('.')) {
+                    let floating = result.slice(result.indexOf('.') + 1, result.length);
+                    let i = floating.length;
+                    while (i >= 0) {
+                        if (floating[i - 1] == '0') {
+                            result = result.slice(0, -1);
+                        }
+                        else if (floating[i - 1] != '0') {
+                            break;
+                        }
+                        i--;
+                    }
+                    if (result.charAt(result.length - 1) == '.') {
+                        result = result.slice(0, -1);
+                    }
+                }
+                if (Math.sign(result) === -1) {
+                    result = result.split('');
+                    result.shift();
+                    result = ('_' + result.toString()).replaceAll(',', '');
+                }
                 calc.splice(i - 1, 3, result.toString());
                 i = 0;
             }
@@ -327,70 +458,105 @@ function plusMinusOperations(calc) {
     }
 }
 
+let negativeButton = document.getElementById('negativeButton');
+negativeButton.addEventListener('click', () => {
+    if (count.charAt(count.length - 1) == ')' || count.charAt(count.length - 1).match(/\d/g)) {
+        count += '*(-';
+        document.querySelector('#display').innerText += ' x (-';
+        parenthesisManagement('opening');
+    }
+    else if (count.charAt(count.length - 1) == '(') {
+        count += '(-';
+        document.querySelector('#display').innerText += '(-';
+        parenthesisManagement('opening');
+    }
+    else if (count.charAt(count.length - 1).match(/(\*|\/|\+|\-)/)) {
+        count += '(-';
+        document.querySelector('#display').innerText += ' (-';
+        parenthesisManagement('opening');
+    }
+})
+
 let resultButton = document.getElementById('equalsButton');
 resultButton.addEventListener('click', () => {
 
     if (isParenthesisOpened) {
         for (let i = 0; i < openedParenthesisCounter; i++) {
-            document.getElementById('count').innerText += ')';
+            count += ')';
+            document.querySelector('#display').innerText += ')';
         }
         parenthesisManagement('zero');
     }
 
-    let calculation = document.getElementById('count').innerText;
-    // let calc = document.getElementById('count').innerText.split(/(\+|\-|\*|\/)/g);
+    let calculation = count;
 
     while (calculation.includes('(') 
     || calculation.includes('*')
     || calculation.includes('/')
     || calculation.includes('+')
     || calculation.includes('-')) {
+
         if(calculation.includes('(')){
+            
             let howManyOpenParenthesis = calculation.match(/\(/g).length;
             
             for (let i = 0; i < howManyOpenParenthesis; i++) {
                 let lastOpenParenthesis = calculation.lastIndexOf('(');
                 let closingLastParenthesis = calculation.indexOf(')', lastOpenParenthesis);
                 
-                let currentCalc = calculation.slice(lastOpenParenthesis + 1, closingLastParenthesis).split(/(\+|\-|\*|\/)/g);  
+                let currentCalc = calculation.slice(lastOpenParenthesis + 1, closingLastParenthesis); //.split(/(\+|\-|\*|\/)/g);
                 let auxiliarString = calculation.slice(lastOpenParenthesis, closingLastParenthesis + 1);
+
+                console.log(currentCalc, typeof(currentCalc))
+                console.log(auxiliarString, typeof(auxiliarString))
+                
+                if(auxiliarString.includes('(-')) { //[-+]([0-9]*[.])?[0-9]+   currentCalc.search(/(\d+[.])?\d+/g) +1
+
+                    let firstOperation = auxiliarString.slice(2)
+                    console.log(firstOperation);
+                    firstOperation = firstOperation.split(/(\+|\-|\*|\/|\))/);
+                    firstOperation = firstOperation[1];
+                    console.log(firstOperation);
+
+                    let indexOps = auxiliarString.indexOf(firstOperation);
+                    console.log(indexOps);
+
+                    let numToReplace = auxiliarString.slice(2, indexOps);
+                    // let numToReplace = currentCalc.match(/([0-9]*[.])?[0-9]+/); .search(/(\+|\-|\*|\/|\))/)
+                    console.log(numToReplace)
+                    let negativeNum = /[-]([0-9]*[.])?[0-9]+/;
+                    currentCalc = currentCalc.replace(negativeNum, '_' + numToReplace);
+                    console.log(currentCalc);
+                    // console.log(auxiliarString, typeof(auxiliarString));
+                }
+
+                currentCalc = currentCalc.split(/(\+|\-|\*|\/)/g);
                 
                 multiplyDivideOperations(currentCalc);
                 plusMinusOperations(currentCalc);
                 
                 calculation = calculation.replace(auxiliarString, currentCalc.toString());
             }
+            if (Math.sign(calculation) === -1) {
+                break;
+            }
         }
         else {
             calculation = calculation.split(/(\+|\-|\*|\/)/g);
-    
             multiplyDivideOperations(calculation);
             plusMinusOperations(calculation);
         }
+        
+    }
+
+    if (calculation.toString().includes('_')) {
+        calculation = calculation.toString().slice(1);
+        calculation = parseFloat(calculation) * -1;
     }
     
+    console.log(calculation, count);
     document.querySelector('#result').innerText = 'Resultado: ' + calculation;
-    //////////////////////////////////////////////////////////////////////////////
-
-    // else {
-    //     let currentCalc = calculation.split(/(\+|\-|\*|\/)/g);
-    //     console.log(currentCalc);
-
-    //     multiplyDivideOperations(currentCalc);
-    //     plusMinusOperations(currentCalc);
-    //     document.querySelector('#result').innerText = 'Resultado: ' + currentCalc;
-    // }
-
-    // 2 + 4 * 9 - 7 = 31 
-    // 1 * 2 / 8 * 4 * 3 = 3
-    //((( 1 * 2 / 8 * 4 * 3) / 2) - 0.5) = 1
-
-    // if (operationsClicked.length > 1) {
-    //         multiplyDivideOperations();
-    //         plusMinusOperations();
-    //         document.querySelector('#result').innerText = 'Resultado: ' + calc;
-    // }
-
+    
     isResultPressed = true;
     operationsClicked = [];
     isDotClicked = false;
