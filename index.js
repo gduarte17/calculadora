@@ -177,7 +177,7 @@ function parenthesisManagement(action) {
 
 //botao %
 document.getElementById('percentButton').addEventListener('click', () => {
-    console.log('percentButton');
+    alert('Função ainda em desenvolvimento!');
 })
 
 function operationButton(operation, symbol, displaySymbol) {
@@ -473,6 +473,11 @@ negativeButton.addEventListener('click', () => {
     else if (count.charAt(count.length - 1).match(/(\*|\/|\+|\-)/)) {
         count += '(-';
         document.querySelector('#display').innerText += ' (-';
+        parenthesisManagement('opening');
+    }
+    else {
+        count += '(-';
+        document.querySelector('#display').innerText += '(-';
         parenthesisManagement('opening');
     }
 })
