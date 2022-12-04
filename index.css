@@ -1,10 +1,40 @@
+@font-face {
+    font-family: "Alexandria";
+    src: url("./fonts/Alexandria-SemiBold.ttf");
+}
+
+* {
+    font-family: 'Alexandria', Verdana, Geneva, Tahoma, sans-serif !important;
+}
+
+.fa-solid {
+    font-family: "Font Awesome 6 Free" !important;
+}
+
 body {
     background-color: #091a20 !important;
 }
 
+#title {
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+#title h3 {
+    font-size: 2.5em;
+}
+
 form {
-    width: 40%;
+    /* width: 30%; */
+    width: 35em;
     margin: 3em;
+    color: white;
+}
+
+#count {
+    text-align: right;
+    margin-right: 7em;
 }
 
 form > div {
@@ -39,14 +69,6 @@ form>a>i {
 form>div>input::-webkit-outer-spin-button,
 form>div>input::-webkit-inner-spin-button {
     appearance: none;
-}
-
-#addNumToCursor {
-    background-color: #123b49;
-    color: white;
-    border: 1px solid #55b7dd;
-    border-radius: 4px;
-    margin-bottom: 2em;
 }
 
 #display {
