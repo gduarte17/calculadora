@@ -31,7 +31,6 @@ deleteButton.addEventListener('click', () => {
                 isNumberAdded = false;
             }
             else if (!stringInput.charAt(stringInput.length - 2).match(/\d/g) && stringInput.charAt(stringInput.length - 2) == '.') {
-                // document.querySelector('#count').innerText = stringInput.slice(0, -1); //#marcador
                 count = stringInput.slice(0, -1);
                 document.querySelector('#display').innerText = document.querySelector('#display').innerText.slice(0, -1);
                 isDotClicked = true;
@@ -86,9 +85,8 @@ cleanButton.addEventListener('click', () => {clearCursor()});
 
 function clearCursor() {
     document.querySelector('#display').innerText = '';
+    document.querySelector('#count').innerText = '';
     count = '';
-    document.querySelector('#current-calculation').innerText = '';
-    document.querySelector('#result').innerText = '';
     isNumberAdded = false;
     isOperationClicked = false;
     isDotClicked = false;
@@ -234,7 +232,7 @@ function operationButton(operation, symbol, displaySymbol) {
         else if (count.charAt(count.length - 1) == '(') {
             if (operation == 'minus') {
                 count += symbol;
-                document.querySelector('#display').innerText += displaySymbol;
+                document.querySelector('#display').innerText += symbol; //symbol mesmo, nesse caso não quero que seja utilizado o espaço
                 isOperationClicked = true;
                 isNumberAdded = false;
                 if (!(operationsClicked.includes(operation))) {
@@ -242,7 +240,7 @@ function operationButton(operation, symbol, displaySymbol) {
                 }
             }
             else {
-                console.log('formato invalido')
+                console.log('Formato inválido')
             }
         }
         else {
@@ -263,6 +261,10 @@ function numberButton(num) {
 
         //CODIGO PARA LIMPAR AS CONTAS APOS APERTAR =
         if (isResultPressed) {
+            // document.querySelector('#count').innerText = '';
+            // document.querySelector('#current-calculation').innerText = '';
+            // document.querySelector('#result').innerText = '';
+            // isResultPressed = false;
             clearCursor();
         }
 
@@ -493,6 +495,8 @@ resultButton.addEventListener('click', () => {
         parenthesisManagement('zero');
     }
 
+    document.querySelector('#count').innerText = document.querySelector('#display').innerText;
+
     let calculation = count;
 
     while (calculation.includes('(') 
@@ -500,7 +504,6 @@ resultButton.addEventListener('click', () => {
     || calculation.includes('/')
     || calculation.includes('+')
     || calculation.includes('-')) {
-
         if(calculation.includes('(')){
             
             let howManyOpenParenthesis = calculation.match(/\(/g).length;
@@ -509,30 +512,20 @@ resultButton.addEventListener('click', () => {
                 let lastOpenParenthesis = calculation.lastIndexOf('(');
                 let closingLastParenthesis = calculation.indexOf(')', lastOpenParenthesis);
                 
-                let currentCalc = calculation.slice(lastOpenParenthesis + 1, closingLastParenthesis); //.split(/(\+|\-|\*|\/)/g);
+                let currentCalc = calculation.slice(lastOpenParenthesis + 1, closingLastParenthesis);
                 let auxiliarString = calculation.slice(lastOpenParenthesis, closingLastParenthesis + 1);
-
-                console.log(currentCalc, typeof(currentCalc))
-                console.log(auxiliarString, typeof(auxiliarString))
                 
-                if(auxiliarString.includes('(-')) { //[-+]([0-9]*[.])?[0-9]+   currentCalc.search(/(\d+[.])?\d+/g) +1
+                if(auxiliarString.includes('(-')) {
 
                     let firstOperation = auxiliarString.slice(2)
-                    console.log(firstOperation);
                     firstOperation = firstOperation.split(/(\+|\-|\*|\/|\))/);
                     firstOperation = firstOperation[1];
-                    console.log(firstOperation);
 
                     let indexOps = auxiliarString.indexOf(firstOperation);
-                    console.log(indexOps);
 
                     let numToReplace = auxiliarString.slice(2, indexOps);
-                    // let numToReplace = currentCalc.match(/([0-9]*[.])?[0-9]+/); .search(/(\+|\-|\*|\/|\))/)
-                    console.log(numToReplace)
                     let negativeNum = /[-]([0-9]*[.])?[0-9]+/;
                     currentCalc = currentCalc.replace(negativeNum, '_' + numToReplace);
-                    console.log(currentCalc);
-                    // console.log(auxiliarString, typeof(auxiliarString));
                 }
 
                 currentCalc = currentCalc.split(/(\+|\-|\*|\/)/g);
@@ -558,10 +551,8 @@ resultButton.addEventListener('click', () => {
         calculation = calculation.toString().slice(1);
         calculation = parseFloat(calculation) * -1;
     }
-    
-    console.log(calculation, count);
-    document.querySelector('#result').innerText = 'Resultado: ' + calculation;
-    
+    document.querySelector('#display').innerText = calculation;
+
     isResultPressed = true;
     operationsClicked = [];
     isDotClicked = false;
