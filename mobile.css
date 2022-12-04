@@ -1,6 +1,6 @@
 @media(max-width: 450px) {
     form {
-        width: 90%;
+        width: 25em !important;
         margin: 1.5em;
     }
 
@@ -16,11 +16,26 @@
         font-size: 1.5em;
     }
 
+    #count {
+        margin-right: 4em;
+    }
+
     form>div>a>i {
         margin-left: -2.5em;
     }
 
     form section {
         width: 85%;
+    }
+}
+
+@media(max-width: 350px) {
+    form {
+        width: 23em !important;
+        margin: .75em;
+    }
+
+    section input {
+        margin: .2em;
     }
 }
