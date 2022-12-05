@@ -2,6 +2,7 @@
     form {
         width: 25em !important;
         margin: 1.5em;
+        margin-top: 0;
     }
 
     #display {
@@ -33,6 +34,7 @@
     form {
         width: 23em !important;
         margin: .75em;
+        margin-top: 0;
     }
 
     section input {
