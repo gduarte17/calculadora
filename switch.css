@@ -1,0 +1,39 @@
+  /* Hide default HTML checkbox */
+#header button {
+    border: 0;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    margin-right: 2em;
+}
+
+.white-mode #header button {
+    background-color: #d6d6d6;
+    color: #1f1f1f;
+}
+
+.white-mode #header button:hover {
+    background-color: #1f1f1f;
+    color: #eee;
+    transition: .4s;
+}
+
+
+.dark-mode #header button {
+    background-color: #1f1f1f;
+}
+
+.dark-mode #header button:hover {
+    background-color: #eee;
+    color: #1f1f1f;
+    transition: .4s;
+}
+
+.white-mode form input {
+    background-color: #eee;
+    color: #161616;
+}
+
+.white-mode #cleanButton, .white-mode #percentButton, .white-mode #parenthesisButton  {
+    background-color: #8f8f8f !important;
+}
