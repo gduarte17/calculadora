@@ -30,12 +30,32 @@
 
 @media(max-width: 350px) {
     form {
-        width: 23em !important;
+        width: 20em !important;
         margin: .75em;
         margin-top: 0;
     }
 
     section input {
-        margin: .2em;
+        margin: .5em;
+        height: 3em;
+        width: 3.8em;
+    }
+
+    #header {
+        justify-content: space-between;
+    }
+
+    #header span {
+        width: 0;
+        height: 0;
+    }
+
+    #header h3 {
+        font-size: 2em;
+    }
+
+    #header button {
+        margin-right: .5em !important;
+        /* margin-left: 1em; */
     }
 }
