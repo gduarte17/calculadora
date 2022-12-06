@@ -11,18 +11,49 @@
     font-family: "Font Awesome 6 Free" !important;
 }
 
-body {
-    background-color: #091a20 !important;
+.dark-mode {
+    background-color: #1f1f1f !important;
+    color: #d6d6d6 !important;
 }
 
-#title {
+.white-mode {
+    background-color: #d6d6d6 !important;
+    color: #1f1f1f !important;
+}
+
+.white-mode h3, .white-mode form i {
+    color: #1f1f1f !important;
+}
+
+.white-mode #display, .white-mode #count {
+    background-color: #d6d6d6 !important;
+    color: #1f1f1f !important;
+}
+
+body {
+    /* background-color: #091a20 !important; */
+    background-color: #1b1b1b !important;
+    color: #eee !important;
+}
+
+#header {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-between;
     color: white;
 }
 
-#title h3 {
+#header h3 {
     font-size: 2.5em;
+}
+
+#header span {
+    width: 60px;
+}
+
+#header button {
+    align-self: center;
+    width: 60px;
 }
 
 form {
@@ -42,19 +73,7 @@ form {
 form > div {
     display: flex;
     flex-direction: row-reverse;
-    margin-bottom: 2em;
-}
-
-form>div>input {
-    width: 100%;
-    padding-right: 1em;
-    margin-bottom: 1em;
-    border: 0px;
-    border-bottom: 1px solid #55b7dd;
-    background-color: #091a20;
-    outline: none;
-    color: white;
-    font-size: 2.5em;
+    margin-bottom: 1.5em;
 }
 
 form>div>a>i {
@@ -68,17 +87,19 @@ form>a>i {
     cursor: pointer;
 }
 
-form>div>input::-webkit-outer-spin-button,
+/* form>div>input::-webkit-outer-spin-button,
 form>div>input::-webkit-inner-spin-button {
     appearance: none;
-}
+} */
 
 #display {
     color: white;
     width: 60%;
-    background-color: #123b49;
-    border: 1px solid #55b7dd;
-    border-radius: 8px;
+    background-color: #1f1f1f;
+    border-bottom: 2px solid #d16c00;
+    /* background-color: #123b49;
+    border: 1px solid #55b7dd; */
+    border-radius: 5px;
     padding: .25em;
     /* margin-top: 3em;
     margin-bottom: 2em; */
@@ -101,21 +122,33 @@ form section {
 section input {
     margin: .35em;
     border: 0px;
-    border-radius: 8px;
+    border-radius: 10px;
     /* background-color: #123b49; */
-    background-color: #0e2b35;
+    /* background-color: #0e2b35; */
+    background-color: #333a49;
     color: white;
     height: 3.5em;
     width: 4.5em;
     justify-self: center;
+    box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset, rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset, rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+.operations {
+    background-color: #d16c00 !important;
+}
+
+#cleanButton, #percentButton, #parenthesisButton {
+    background-color: #5a5a5a !important;
 }
 
 section input:hover {
-    border: 1px solid #4fc1ee;
+    /* border: 1px solid #4fc1ee;
     box-shadow: 2px 2px 12px 0px #4fc1ee;
-    transition: border .15s, box-shadow .15s;
+    transition: border .15s, box-shadow .15s; */
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
 #current-calculation, #result {
     color: white;
 }
+
