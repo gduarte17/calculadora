@@ -7,12 +7,18 @@
     <title>Calculadora</title>
     <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="switch.css" />
     <link rel="stylesheet" href="bootstrap.min.css" />
     <script type="text/javascript" src="index.js" defer></script>
+    <script type="text/javascript" src="dark-mode-control.js" defer></script>
   </head>
   <body>
-    <div id="title">
+    <div id="header">
+      <span></span>
       <h3>Calculadora</h3>
+      <button id="modeControl">
+        <i class="fa-solid fa-sun"></i>
+      </button>
     </div>
     <form action="" class="center-block">
       <p id="count"></p>
@@ -46,7 +52,12 @@
         <input type="button" id="3-button" value="3" class="number-button" />
 
         <input type="button" id="plusButton" value="+" class="operations" />
-        <input type="button" id="negativeButton" value="+/-" />
+        <input
+          type="button"
+          id="negativeButton"
+          value="+/-"
+          class="operations"
+        />
 
         <input type="button" id="0-button" value="0" class="number-button" />
 
