@@ -87,22 +87,13 @@ form>a>i {
     cursor: pointer;
 }
 
-/* form>div>input::-webkit-outer-spin-button,
-form>div>input::-webkit-inner-spin-button {
-    appearance: none;
-} */
-
 #display {
     color: white;
     width: 60%;
     background-color: #1f1f1f;
     border-bottom: 2px solid #d16c00;
-    /* background-color: #123b49;
-    border: 1px solid #55b7dd; */
     border-radius: 5px;
     padding: .25em;
-    /* margin-top: 3em;
-    margin-bottom: 2em; */
     margin: 0 auto 0 auto;
     height: 2.1em;
     font-size: 1.5em;
@@ -111,7 +102,6 @@ form>div>input::-webkit-inner-spin-button {
 
 form section {
     display: grid;
-    /* grid-template-columns: 22% 22% 22% 34%; */
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 20% 20% 20% 20% 20%;
     width: 60%;
@@ -123,8 +113,6 @@ section input {
     margin: .35em;
     border: 0px;
     border-radius: 10px;
-    /* background-color: #123b49; */
-    /* background-color: #0e2b35; */
     background-color: #333a49;
     color: white;
     height: 3.5em;
