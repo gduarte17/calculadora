@@ -48,7 +48,7 @@ body {
 }
 
 #header span {
-    width: 60px;
+    width: 4.5em;
 }
 
 #header button {
@@ -87,13 +87,22 @@ form>a>i {
     cursor: pointer;
 }
 
+/* form>div>input::-webkit-outer-spin-button,
+form>div>input::-webkit-inner-spin-button {
+    appearance: none;
+} */
+
 #display {
     color: white;
     width: 60%;
     background-color: #1f1f1f;
     border-bottom: 2px solid #d16c00;
+    /* background-color: #123b49;
+    border: 1px solid #55b7dd; */
     border-radius: 5px;
     padding: .25em;
+    /* margin-top: 3em;
+    margin-bottom: 2em; */
     margin: 0 auto 0 auto;
     height: 2.1em;
     font-size: 1.5em;
@@ -102,6 +111,7 @@ form>a>i {
 
 form section {
     display: grid;
+    /* grid-template-columns: 22% 22% 22% 34%; */
     grid-template-columns: 25% 25% 25% 25%;
     grid-template-rows: 20% 20% 20% 20% 20%;
     width: 60%;
@@ -113,6 +123,8 @@ section input {
     margin: .35em;
     border: 0px;
     border-radius: 10px;
+    /* background-color: #123b49; */
+    /* background-color: #0e2b35; */
     background-color: #333a49;
     color: white;
     height: 3.5em;
@@ -130,6 +142,9 @@ section input {
 }
 
 section input:hover {
+    /* border: 1px solid #4fc1ee;
+    box-shadow: 2px 2px 12px 0px #4fc1ee;
+    transition: border .15s, box-shadow .15s; */
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
