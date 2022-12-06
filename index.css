@@ -142,9 +142,6 @@ section input {
 }
 
 section input:hover {
-    /* border: 1px solid #4fc1ee;
-    box-shadow: 2px 2px 12px 0px #4fc1ee;
-    transition: border .15s, box-shadow .15s; */
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
 
