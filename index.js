@@ -592,4 +592,6 @@ resultButton.addEventListener('click', () => {
     isResultPressed = true;
     operationsClicked = [];
     isDotClicked = false;
+    console.log(count, calculation);
+    count = calculation;
 })
