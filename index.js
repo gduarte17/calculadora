@@ -211,13 +211,15 @@ function operationButton(operation, symbol, displaySymbol) {
         }
         else if (!isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
             count += '0' + symbol;
-            document.querySelector('#display').innerText += '0' + symbol;
+            document.querySelector('#display').innerText += ' 0' + symbol;
             isDotClicked = true;
+            isOperationClicked = false;
         }
         else if (isNumberAdded && (isOperationClicked || !isOperationClicked) && operation == 'dot') {
             count += symbol;
             document.querySelector('#display').innerText += symbol;
             isDotClicked = true;
+            isOperationClicked = false;
         }
         else if (count.charAt(count.length - 1) == ')') {
             count += symbol;
@@ -243,6 +245,41 @@ function operationButton(operation, symbol, displaySymbol) {
                 console.log('Formato inválido')
             }
         }
+        else if (isResultPressed ) {
+            isResultPressed = false;
+
+            if (operation != 'dot') {
+                count += symbol;
+                document.querySelector('#display').innerText += displaySymbol;
+                    
+                isOperationClicked = true;
+                isNumberAdded = false;
+                isDotClicked = false;
+                if (!(operationsClicked.includes(operation))) {
+                    operationsClicked += operation + ' ';
+                }
+            }
+            else if (operation == 'dot') {
+                if (isDotClicked){
+                    alert('Esse número já tem ponto flutuante!');
+                }
+                else {
+                    if (isNumberAdded) {
+                        count += symbol;
+                        document.querySelector('#display').innerText += symbol;
+                        isDotClicked = true;
+                        isOperationClicked = false;
+                    }
+                    else {
+                        count += '0' + symbol;
+                        document.querySelector('#display').innerText += '0' + symbol;
+                        isDotClicked = true;
+                        isOperationClicked = false;
+                    }
+                }
+
+            }
+        }
         else {
             alert('É necessário inserir um número primeiro!');
         }
@@ -264,8 +301,7 @@ function numberButton(num) {
             // document.querySelector('#count').innerText = '';
             // document.querySelector('#current-calculation').innerText = '';
             // document.querySelector('#result').innerText = '';
-            // isResultPressed = false;
-            clearCursor();
+            // isResultPressed = false; CTRL Z
         }
 
         //a verificacao serve para permitir numeros com mais de um digito
